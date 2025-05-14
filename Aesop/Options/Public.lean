@@ -156,6 +156,12 @@ structure Options where
   Enable the builtin `unfold` normalisation rule.
   -/
   enableUnfold := true
+
+  /--
+  Use length-normalized scoring heuristic of BFS-Prover.
+  -/
+  bfsScore := false
+
   deriving Inhabited, BEq, Repr
 
 /--

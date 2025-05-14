@@ -21,6 +21,9 @@ namespace Percent
 protected def ofFloat (f : Float) : Option Percent :=
   if 0 <= f && f <= 1.0 then some ⟨f⟩ else none
 
+protected def ofFloat' (f : Float) : Percent :=
+  ⟨f⟩
+
 instance : Mul Percent where
   mul p q := ⟨p.toFloat * q.toFloat⟩
 
@@ -53,6 +56,9 @@ instance : ToString Percent where
 
 instance : HPow Percent Nat Percent where
   hPow | ⟨p⟩, n => ⟨p ^ n.toFloat⟩
+
+def zero : Percent :=
+  ⟨0⟩
 
 def hundred : Percent :=
   ⟨1⟩

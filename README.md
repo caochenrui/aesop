@@ -1,4 +1,12 @@
-# Aesop
+# Aesop (Forked Version)
+
+> **Note:** This repository is a fork of the original [aesop](https://github.com/leanprover-community/aesop).
+>
+> **Changes made in this fork:**
+>
+> * Add BFS-Prover's scoring heuristic via `bfsScore` option. If you're using the `BFS-Prover` provided by our `Lean Copilot`, it is recommended to enable this option.
+>
+> The original README follows below.
 
 Aesop (Automated Extensible Search for Obvious Proofs) is a proof search tactic
 for Lean 4. It is broadly similar to Isabelle's `auto`. In essence, Aesop works

@@ -81,7 +81,7 @@ unsafe def tacGenImpl (decl : Name) : RuleTac := λ input => do
     initialState.restore
     let env ← getEnv
     try
-      let some successProbability := Percent.ofFloat successProbability
+      let some successProbability := some (Percent.ofFloat' successProbability)
         | throwError "invalid success probability '{successProbability}', must be between 0 and 1"
       let .ok stx :=
         Parser.runParserCategory env `tactic tacticStr (fileName := "<stdin>")

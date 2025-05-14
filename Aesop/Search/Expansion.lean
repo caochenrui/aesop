@@ -70,9 +70,19 @@ def addRapps (parentRef : GoalRef) (rule : RegularRule)
   let mut subgoals := Array.mkEmpty $ rapps.size * 3
   for h : i in [:rapps.size] do
     let rapp := rapps[i]
+    let options := (← read).options
+    let bfsScore := options.bfsScore
+    -- Lean.logInfo m!"Success probability: {rapp.successProbability?.getD rule.successProbability}, rule.successProbability: {rule.successProbability}, rule: {rule.name}, parent.depth: {parent.depth}"
     let successProbability :=
-      parent.successProbability *
-      (rapp.successProbability?.getD rule.successProbability)
+      if bfsScore then
+        if parent.depth == 0 then
+          parent.successProbability * (rapp.successProbability?.getD rule.successProbability)
+        else if parent.depth == 1 then
+          Percent.ofFloat' (((rapp.successProbability?.getD rule.successProbability).toFloat * (1 / Float.pow (Float.ofNat parent.depth) 0.5)))
+        else
+          Percent.ofFloat' (((parent.successProbability.toFloat * (Float.pow (Float.ofNat parent.depth - 1) 0.5) + (rapp.successProbability?.getD rule.successProbability).toFloat) * (1 / Float.pow (Float.ofNat parent.depth) 0.5)))
+      else
+        parent.successProbability * (rapp.successProbability?.getD rule.successProbability)
     let rref ← addRapp {
       rapp with
       parent := parentRef
